@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"strconv"
+	"time"
 )
 
 const (
@@ -15,15 +16,21 @@ const (
 	Faint  = "\033[2m"
 )
 
-func CheckResult(day string, step string, result int, expectedResult int) {
+func CheckResult(day string, step string, runner func() int) {
+	start := time.Now()
+	result := runner()
+	elapsed := time.Since(start).Milliseconds()
+
+	expected := ReadResult(day + "/result" + step + ".txt")
+
 	prefix := "Day " + day + " Step " + step + ":"
 	var suffix string
 
-	if result == expectedResult {
+	if result == expected {
 		suffix = Green + "✔︎" + Reset + Faint + " (" + strconv.Itoa(result) + ")"
 	} else {
-		suffix = Red + "X" + Reset + Faint + " (got " + strconv.Itoa(result) + ", expected: " + strconv.Itoa(expectedResult) + ")"
+		suffix = Red + "X" + Reset + Faint + " (got " + strconv.Itoa(result) + ", expected: " + strconv.Itoa(expected) + ")"
 	}
 
-	fmt.Println(prefix + " " + suffix)
+	fmt.Printf("%s %s %dms\n", prefix, suffix, elapsed)
 }

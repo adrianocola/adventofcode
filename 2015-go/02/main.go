@@ -9,16 +9,11 @@ import (
 func main() {
 	input := utils.ReadInputLines("02/input.txt")
 
-	expectedResult1 := utils.ReadResult("02/result1.txt")
-	result1 := solution1(input)
-	utils.CheckResult("02", "1", result1, expectedResult1)
-
-	expectedResult2 := utils.ReadResult("02/result2.txt")
-	result2 := solution2(input)
-	utils.CheckResult("02", "2", result2, expectedResult2)
+	utils.CheckResult("02", "1", func() int { return step1(input) })
+	utils.CheckResult("02", "2", func() int { return step2(input) })
 }
 
-func solution1(boxesLines []string) int {
+func step1(boxesLines []string) int {
 	var count int
 	for _, v := range boxesLines {
 		parts := strings.Split(v, "x")
@@ -35,7 +30,7 @@ func solution1(boxesLines []string) int {
 	return count
 }
 
-func solution2(boxesLines []string) int {
+func step2(boxesLines []string) int {
 	var count int
 	for _, v := range boxesLines {
 		parts := strings.Split(v, "x")

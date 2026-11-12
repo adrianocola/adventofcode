@@ -8,16 +8,12 @@ var up rune = '('
 
 func main() {
 	input := utils.ReadInput("01/input.txt")
-	expectedResult1 := utils.ReadResult("01/result1.txt")
-	result1 := solution1(input)
-	utils.CheckResult("01", "1", result1, expectedResult1)
 
-	expectedResult2 := utils.ReadResult("01/result2.txt")
-	result2 := solution2(input)
-	utils.CheckResult("01", "2", result2, expectedResult2)
+	utils.CheckResult("01", "1", func() int { return step1(input) })
+	utils.CheckResult("01", "2", func() int { return step2(input) })
 }
 
-func solution1(input string) int {
+func step1(input string) int {
 	var counter int
 	for _, v := range input {
 		if v == up {
@@ -30,7 +26,7 @@ func solution1(input string) int {
 	return counter
 }
 
-func solution2(input string) int {
+func step2(input string) int {
 	var counter int
 	for i, v := range input {
 		if v == up {
