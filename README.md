@@ -8,7 +8,7 @@ This repo does not include the puzzle inputs or the answers. The Advent of Code 
 
 To run a solution, you must add your own inputs and expected answers. Get your input for each puzzle on [adventofcode.com](https://adventofcode.com) (you must log in). The expected answers are the ones the site accepted for your input.
 
-Put the files in `inputs/` in this format:
+Put the files in `data/` in this format:
 
 ```
 data/
