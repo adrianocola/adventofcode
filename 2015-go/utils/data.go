@@ -18,7 +18,7 @@ func readFile(filePath string) (string, error) {
 	content := strings.ReplaceAll(string(data), "\r\n", "\n")
 	content = strings.TrimSuffix(content, "\n")
 
-	return content, err
+	return content, nil
 }
 
 func readInputFile() string {

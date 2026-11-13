@@ -2,18 +2,15 @@ package utils
 
 import (
 	"log"
+	"path"
 	"runtime/debug"
-	"strings"
 )
 
 func GetExecDay() string {
 	info, ok := debug.ReadBuildInfo()
-	if ok == false {
+	if !ok {
 		log.Fatal("No build info")
 	}
 
-	splittedPath := strings.Split(info.Path, "/")
-	day := splittedPath[len(splittedPath)-1]
-
-	return day
+	return path.Base(info.Path)
 }
