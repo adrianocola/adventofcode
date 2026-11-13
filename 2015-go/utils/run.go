@@ -16,24 +16,34 @@ const (
 	Faint  = "\033[2m"
 )
 
-func CheckResult(day string, step string, runner func() int) {
+func convertResultToString[T int | string](result T) string {
+	switch v := any(result).(type) {
+	case int:
+		return strconv.Itoa(v)
+	case string:
+		return v
+	default:
+		return ""
+	}
+}
+
+func RunPart[T int | string](part int, runner func() T) {
 	start := time.Now()
 	result := runner()
 	elapsed := time.Since(start).Milliseconds()
 
-	expected, expectedError := ReadResult(day + "/result" + step + ".txt")
+	day := GetExecDay()
 
-	prefix := "Day " + day + " Step " + step + ":"
+	expected := ReadResult(day, part)
+	resultStr := convertResultToString(result)
+
+	prefix := fmt.Sprintf("Day %s Part %d:", day, part)
 	var suffix string
 
-	if result == expected {
-		suffix = Green + "✔︎" + Reset + Faint + " (" + strconv.Itoa(result) + ")"
+	if resultStr == expected {
+		suffix = Green + "✔︎" + Reset + Faint + " (" + resultStr + ")"
 	} else {
-		expectedMessage := strconv.Itoa(expected)
-		if expectedError != nil {
-			expectedMessage = "<missing>"
-		}
-		suffix = Red + "X" + Reset + Faint + " (got " + strconv.Itoa(result) + ", expected: " + expectedMessage + ")"
+		suffix = Red + "X" + Reset + Faint + " (got " + resultStr + ", expected: " + expected + ")"
 	}
 
 	fmt.Printf("%s %s %dms\n", prefix, suffix, elapsed)

@@ -7,13 +7,13 @@ import (
 )
 
 func main() {
-	input := utils.ReadInputLines("02/input.txt")
+	input := utils.ReadInputLines()
 
-	utils.CheckResult("02", "1", func() int { return step1(input) })
-	utils.CheckResult("02", "2", func() int { return step2(input) })
+	utils.RunPart(1, func() int { return part1(input) })
+	utils.RunPart(2, func() int { return part2(input) })
 }
 
-func step1(boxesLines []string) int {
+func part1(boxesLines []string) int {
 	var count int
 	for _, v := range boxesLines {
 		parts := strings.Split(v, "x")
@@ -30,7 +30,7 @@ func step1(boxesLines []string) int {
 	return count
 }
 
-func step2(boxesLines []string) int {
+func part2(boxesLines []string) int {
 	var count int
 	for _, v := range boxesLines {
 		parts := strings.Split(v, "x")
