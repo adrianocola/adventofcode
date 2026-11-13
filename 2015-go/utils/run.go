@@ -25,7 +25,6 @@ func RunPart[T int | string](part int, runner func() T) {
 	expected := ReadResult(day, part)
 	resultStr := fmt.Sprint(result)
 
-	prefix := fmt.Sprintf("Day %s Part %d:", day, part)
 	var suffix string
 
 	if resultStr == expected {
@@ -34,5 +33,5 @@ func RunPart[T int | string](part int, runner func() T) {
 		suffix = red + "X" + reset + faint + " (got " + resultStr + ", expected: " + expected + ")" + reset
 	}
 
-	fmt.Printf("%s %s %v\n", prefix, suffix, elapsed)
+	fmt.Printf("Part %d: %s %v\n", part, suffix, elapsed)
 }
