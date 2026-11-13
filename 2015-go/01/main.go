@@ -4,8 +4,6 @@ import (
 	"aoc2015/utils"
 )
 
-var up rune = '('
-
 func main() {
 	input := utils.ReadInput()
 
@@ -16,7 +14,7 @@ func main() {
 func part1(input string) int {
 	var counter int
 	for _, v := range input {
-		if v == up {
+		if v == '(' {
 			counter++
 		} else {
 			counter--
@@ -29,7 +27,7 @@ func part1(input string) int {
 func part2(input string) int {
 	var counter int
 	for i, v := range input {
-		if v == up {
+		if v == '(' {
 			counter++
 		} else {
 			counter--
