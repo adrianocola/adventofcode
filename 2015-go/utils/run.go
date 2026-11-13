@@ -21,7 +21,7 @@ func CheckResult(day string, step string, runner func() int) {
 	result := runner()
 	elapsed := time.Since(start).Milliseconds()
 
-	expected := ReadResult(day + "/result" + step + ".txt")
+	expected, expectedError := ReadResult(day + "/result" + step + ".txt")
 
 	prefix := "Day " + day + " Step " + step + ":"
 	var suffix string
@@ -29,7 +29,11 @@ func CheckResult(day string, step string, runner func() int) {
 	if result == expected {
 		suffix = Green + "✔︎" + Reset + Faint + " (" + strconv.Itoa(result) + ")"
 	} else {
-		suffix = Red + "X" + Reset + Faint + " (got " + strconv.Itoa(result) + ", expected: " + strconv.Itoa(expected) + ")"
+		expectedMessage := strconv.Itoa(expected)
+		if expectedError != nil {
+			expectedMessage = "<missing>"
+		}
+		suffix = Red + "X" + Reset + Faint + " (got " + strconv.Itoa(result) + ", expected: " + expectedMessage + ")"
 	}
 
 	fmt.Printf("%s %s %dms\n", prefix, suffix, elapsed)

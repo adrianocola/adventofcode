@@ -7,39 +7,42 @@ import (
 	"strings"
 )
 
-func readFile(filePath string) string {
+func readFile(filePath string) (string, error) {
 	normalizedFilePath := strings.TrimSuffix(filePath, "/")
 	data, err := os.ReadFile("../inputs/2015/" + normalizedFilePath)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
 	// Normalize Windows line endings (\r\n) if needed, and trim a trailing newline
 	content := strings.ReplaceAll(string(data), "\r\n", "\n")
 	content = strings.TrimSuffix(content, "\n")
 
-	return content
+	return content, err
 }
 
 // Reads input string relative to this year input folder
 func ReadInput(filePath string) string {
-	return readFile(filePath)
+	data, err := readFile(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return data
 }
 
 // Reads input lines relative to this year input folder
 func ReadInputLines(filePath string) []string {
-	content := readFile(filePath)
-
-	return strings.Split(content, "\n")
-}
-
-// Reads result relative to this year input folder
-func ReadResult(filePath string) int {
-	content := readFile(filePath)
-	result, err := strconv.ParseInt(content, 10, 0)
+	data, err := readFile(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return int(result)
+	return strings.Split(data, "\n")
+}
+
+// Reads result relative to this year input folder
+func ReadResult(filePath string) (int, error) {
+	data, err := readFile(filePath)
+	result, err := strconv.ParseInt(data, 10, 0)
+	return int(result), err
 }
